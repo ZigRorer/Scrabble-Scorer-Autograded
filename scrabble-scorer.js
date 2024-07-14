@@ -33,10 +33,14 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
-};
+   let word = input.question("Let's play some scrabble! Enter a word: ");
+   console.log(oldScrabbleScorer(word));
+}; 
 
-let newPointStructure;
+//has one job, score the word elsewhere
+
+
+let newPointStructure; //move to scrabbleScorer
 
 let simpleScorer;
 
@@ -44,11 +48,11 @@ let vowelBonusScorer;
 
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = []; //task 2 should hold three objects
 
 function scorerPrompt() {}
 
-function transform() {};
+function transform() {}; //dont add space property here
 
 function runProgram() {
    initialPrompt();
