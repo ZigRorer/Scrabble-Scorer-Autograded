@@ -27,14 +27,17 @@ function oldScrabbleScorer(word) {
 	  }
 	}
 	return letterPoints;
- }
+ }; //SCRABBLE
 
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   let word = input.question("Let's play some scrabble! Enter a word: ");
-   console.log(oldScrabbleScorer(word));
+   let promptWord = input.question("Let's play some scrabble! Enter a word: ");
+   return promptWord;
+   
+   //console.log(oldScrabbleScorer(word)); 
+   //i can get it to print what i need by calling the functions here but i don't think that's right
 }; 
 
 //has one job, score the word elsewhere
@@ -42,20 +45,72 @@ function initialPrompt() {
 
 let newPointStructure; //move to scrabbleScorer
 
-let simpleScorer;
+let simpleScorer = function(word){
+   word = word.toUpperCase();
+   let letterPoints = 0;
 
-let vowelBonusScorer;
+   for (let i = 0; i < word.length; i++) {
+      letterPoints += 1;
+   }
+console.log(`Score for '${word}': ${letterPoints}`)
+   return letterPoints;
+}; //makes all letters 1pt!! SIMPLE
+
+let vowelBonusScorer = function(word){
+   word = word.toUpperCase();
+   let letterPoints = 0;
+   const vowels = ["A","E","I","O","U"];
+
+   for (let i = 0; i < word.length; i++) {
+      if (vowels.includes(word[i])) {
+         letterPoints += 3;
+      } else {
+         letterPoints += 1;
+      };
+   }
+   console.log(`Score for '${word}': ${letterPoints}`)
+   
+   return letterPoints;
+}; //makes vowels 3pts and consonants 1pt BONUS
 
 let scrabbleScorer;
 
-const scoringAlgorithms = []; //task 2 should hold three objects
+const scoringAlgorithms = [ {
+   name: "Simple: ",
+   description: "Each letter is worth 1 point.",
+   scorerFunction: simpleScorer}, {
+   name: "Vowel Bonus: ",
+   description: "Vowels are 3 pts, consonants are 1 pt.",
+   scorerFunction: vowelBonusScorer}, {
+   name: "Scrabble: ", 
+   description: "The traditional scoring algorithm.",
+   scorerFunction: oldScrabbleScorer
+   } ]; //task 2 should hold three objects
 
-function scorerPrompt() {}
+function scorerPrompt() {
+   let chooseScorer = input.question(`Which scoring algorithm would you like to use? 
+      0 - ${scoringAlgorithms[0].name} ${scoringAlgorithms[0].description}
+      1 - ${scoringAlgorithms[1].name} ${scoringAlgorithms[1].description}
+      2 - ${scoringAlgorithms[2].name} ${scoringAlgorithms[2].description}
+      \n Enter 0, 1, or 2: `);
+      //for (item in scoringAlgorithms) ??
+      if (chooseScorer === 0) {
+         return scoringAlgorithms[0].scorerFunction;
+      } else if (chooseScorer === 1) {
+         console.log(`${scoringAlgorithms[1].scorerFunction}`);
+      } else if (chooseScorer === 2) {
+         console.log(`${scoringAlgorithms[2].scorerFunction}`);
+      } else {
+      console.log("Please try again."); 
+      }
+      return;
+};
 
 function transform() {}; //dont add space property here
 
 function runProgram() {
-   initialPrompt();
+  let promptWord = initialPrompt();
+   scorerPrompt(promptWord);
    
 }
 
