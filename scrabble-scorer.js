@@ -33,17 +33,9 @@ function initialPrompt() {
    return promptWord;
 };
 
-//let newPointStructure = transform(oldPointStructure); original location
-
 let simpleScorer = function(word){
-   word = word.toLowerCase();
-   let letterPoints = 0;
-   for (let i = 0; i < word.length; i++) {
-      letterPoints += 1;
-   }
-console.log(`Score for '${word}': ${letterPoints}`);
-   return letterPoints;
-}; //verified with console.log(simpleScorer('Zig'));
+   return word.length;
+};
 
 function vowelBonusScorer(word) {
    word = word.toLowerCase();
@@ -58,10 +50,9 @@ function vowelBonusScorer(word) {
       };
    }
    return letterPoints;
-}; //veried with console.log(vowelBonusScorer('Zig'));
+};
 
 function scrabbleScorer(word) {
-   let newPointStructure = transform(oldPointStructure);
    let score = 0;
    for (const letter of word.toLowerCase()) {
       if (newPointStructure[letter] !== undefined) {
@@ -69,7 +60,9 @@ function scrabbleScorer(word) {
       }
    }
    return score;
-}; //for ... of iterates over values, verified with console.log(scrabbleScorer('Zig'));
+}; 
+
+let newPointStructure = transform(oldPointStructure);
 
 const scoringAlgorithms = [ {
    name: "Simple: ",
@@ -90,7 +83,7 @@ function scorerPrompt() {
        2 - ${scoringAlgorithms[2].name} ${scoringAlgorithms[2].description}`);
 
    let choice = input.question("Enter 0, 1, or 2: ");
-   return scoringAlgorithms[choice]; //problem could be here, .scorerFunction throws error
+   return scoringAlgorithms[choice];
 };
 
 function transform(oldPointStructure) {
@@ -105,13 +98,11 @@ function transform(oldPointStructure) {
    return newPointStructure;
 };
 
-let newPointStructure = transform(oldPointStructure); //verified with console.log(newPointStructure);
-
 function runProgram() {
   let word = initialPrompt();
-  let selectAlgorithm = scorerPrompt(); //.scorerFunction??
-  let score = selectAlgorithm.scorerFunction[word];
-  //console.log(`Score for '${word}': ${score}`);
+  let selectAlgorithm = scorerPrompt().scorerFunction;
+  let score = selectAlgorithm(word);
+  console.log(`Score for '${word}': ${score}`);
 };
 
 runProgram();
